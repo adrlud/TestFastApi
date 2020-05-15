@@ -19,6 +19,15 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
+def delete_user(db: Session, user_id: int):
+    user_to_delete = get_user(db, user_id=user_id)
+    if user_to_delete:
+        db.delete(user_to_delete)
+        db.commit()
+        db.flush()
+    return user_to_delete
+
+
 
 def get_items(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Item).offset(skip).limit(limit).all()

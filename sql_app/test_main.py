@@ -46,6 +46,12 @@ def test_create_user():
     assert data["email"] == "deadpool@example.com"
     assert data["id"] == user_id
 
+    response = client.delete(f"/users/{user_id}")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["email"] == "deadpool@example.com"
+    assert data["id"] == user_id
+
 def test_read_users():
     response = client.get("/users/")
     assert response.status_code == 200, response.text
@@ -53,3 +59,4 @@ def test_read_users():
 def test_read_items():
     response = client.get("/items")
     assert response.status_code == 200, response.text
+
